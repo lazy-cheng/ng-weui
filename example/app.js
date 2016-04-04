@@ -4,6 +4,7 @@ var app = angular.module('app', [
     'ngAnimate',
     'ngSanitize',
     'ngTouch',
+    'ngWeui',
     'ui.router'
 ]);
 

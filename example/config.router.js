@@ -30,6 +30,13 @@ app.run(
                         controller: 'dialogCtrl'
                     })
 
+                    //dialog
+                    .state('app.toast', {
+                        url: '/toast',
+                        templateUrl: 'example/tpl/toast.html',
+                        controller: 'toastCtrl'
+                    })
+
             }
         ]
     );

@@ -8,8 +8,6 @@ app.controller('appCtrl', ['$scope', function($scope) {
 
 }]);
 
-
-
 //dialogCtrl
 app.controller('dialogCtrl', ['$scope','ngWeui', function($scope,ngWeui) {
     //alert
@@ -26,4 +24,26 @@ app.controller('dialogCtrl', ['$scope','ngWeui', function($scope,ngWeui) {
             }
         });
     };
+}]);
+
+//toastCtrl
+app.controller('toastCtrl', ['$scope','ngWeui', function($scope,ngWeui) {
+    //toast
+    $scope.showToast = function(e){
+        switch (e){
+            case 0:
+                //success
+                ngWeui.toast.show();
+                break;
+            case 1:
+                //info
+                ngWeui.toast.show("信息 info 3000");
+                break;
+            case 2:
+                //errot
+                ngWeui.toast.show("错误 error 2000");
+                break;
+        }
+    };
+
 }]);

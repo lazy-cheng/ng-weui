@@ -39,8 +39,26 @@
                             params =  e.match(/\S+/g);
                         };
                         return params;
+                    },
+                    destroy:function(e){
+                        if (document.querySelector(e)){
+                            document.querySelector(e).remove();
+                        };
+                    },
+                    ruleSelector:function(selector){
+                        function uni(selector) {
+                            return selector.replace(/::/g, ':')
+                        };
+
+                        return Array.prototype.filter.call(Array.prototype.concat.apply([], Array.prototype.map.call(document.styleSheets, function(x) {
+                            return Array.prototype.slice.call(x.cssRules);
+                        })), function(x) {
+                            return uni(x.selectorText) === uni(selector);
+                        });
                     }
                 };
+
+
                 var publicMethods = {
                     dialog:{
                         /*
@@ -71,9 +89,7 @@
                                 scope.dialogAlert = false;
                             };
                             angular.extend(scope,opts);
-                            if (document.querySelector(".weui_dialog_alert")){
-                                document.querySelector(".weui_dialog_alert").remove();
-                            };
+                            privateMethods.destroy(".weui_dialog_alert");
                             $body.append($compile(
                                 "<div class='weui_dialog_alert'  ng-show='dialogAlert'>" +
                                 "<div class='weui_mask'></div>" +
@@ -123,9 +139,7 @@
                                 scope.dialogConfirm = false;
                             };
                             angular.extend(scope,opts);
-                            if (document.querySelector(".weui_dialog_confirm")){
-                                document.querySelector(".weui_dialog_confirm").remove();
-                            };
+                            privateMethods.destroy(".weui_dialog_confirm");
                             $body.append($compile(
                                 "<div class='weui_dialog_confirm'  ng-show='dialogConfirm'>" +
                                 "<div class='weui_mask'></div>" +
@@ -143,7 +157,71 @@
                         }
                     },
                     toast:{
+                        /*
+                         * @param {String} options: body type time
+                         * @return {Object} dialog
+                         */
+                        show:function(opts){
+                            if(angular.isString(opts)){
+                                var as = privateMethods.getArguments(opts);
+                                switch (as.length){
+                                    case 3:
+                                        opts = {body:as[0], type:as[1],time:parseInt(as[2])};
+                                        break;
+                                    case 2:
+                                        opts = {body:as[0], type:as[1],time:2000};
+                                        break;
+                                    default:
+                                        opts = {body:"已完成",time:2000};
+                                        break;
+                                }
+                            }else{
+                                opts = {body:"已完成",time:2000};
+                            };
 
+                            var scope = opts.scope = angular.isObject(opts.scope) ? opts.scope.$new() : $rootScope.$new();
+                            scope.show = function(){
+                                scope.toast = true;
+                            };
+                            scope.hide= function(){
+                                scope.toast = false;
+                            };
+                            angular.extend(scope,opts);
+                            privateMethods.destroy(".aweui-show");
+                            $body.append($compile(
+                                "<div class='aweui-show'  ng-show='toast'>" +
+                                "<div class='weui_mask_transparent'></div>" +
+                                " <div class='weui_toast'>" +
+                                "<i class='weui_icon_toast'></i>" +
+                                "<p class='weui_toast_content'>{{body}}</p>" +
+                                "</div>" +
+                                "</div>"
+                            )(scope));
+
+                            var pseudo = privateMethods.ruleSelector(".weui_icon_toast:before").slice(-1);
+                            debugger
+                            switch (opts.type){
+                                case "error":
+                                    // \EA0D
+                                    opts.type = "\EA0D";
+                                    break;
+                                case "info":
+                                    // \EA0C
+                                    opts.type = "\EA0C";
+                                    break;
+                                default:
+                                    opts.type = "\EA08";
+                                    break;
+                            }
+                            pseudo.forEach(function(rule) {
+                                debugger
+                                rule.style.content = opts.type;
+                            });
+                            scope.show();
+                            $timeout(function(){
+                                scope.hide();
+                            },scope.time);
+                        }
                     }
                 };
                 return publicMethods;

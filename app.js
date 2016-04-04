@@ -2,19 +2,14 @@
 
 angular.module('app', [
     'ngAnimate',
-    'ngCookies',
-    'ngResource',
     'ngSanitize',
     'ngTouch',
     'ngStorage',
     'ui.router',
     'ui.load',
     'ui.jq',
-    'ui.validate',
-    'oc.lazyLoad'
-]).run(function($rootScope,$state,$http,$stateParams,$cookieStore,ajax){
+]).run(function($rootScope,$state,$http,$stateParams,$cookieStore){
 
-  	$rootScope.z$imageUrl = "http://zzb.xfzbgl.com.cn:8898";
 
   	window._alert = function(text,type,title){
 		type = type||"success";

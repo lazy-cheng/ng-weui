@@ -2,7 +2,7 @@
 
 # 概述
 
-ng-weui 为微信 webui angularjs模块指令化封装
+ng-weui 为微信 WeUI v0.4.0  提高angularjs模块指令化封装调用
 
 # 使用
 

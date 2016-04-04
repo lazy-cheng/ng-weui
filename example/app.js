@@ -5,8 +5,9 @@ var app = angular.module('app', [
     'ngSanitize',
     'ngTouch',
     'ui.router'
-]).run(function($rootScope,$state,$http,$stateParams){
+]);
 
+app.run(function($rootScope,$state,$http,$stateParams){
 
   	window._alert = function(text,type,title){
 		type = type||"success";

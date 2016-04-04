@@ -3,8 +3,7 @@
 /**
  * Config for the router
  */
-angular.module('app')
-    .run(
+app.run(
         ['$rootScope', '$state', '$stateParams',
             function ($rootScope, $state, $stateParams) {
                 $rootScope.$state = $state;

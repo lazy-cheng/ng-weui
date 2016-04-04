@@ -1,14 +1,11 @@
 'use strict';
 
-angular.module('app', [
+var app = angular.module('app', [
     'ngAnimate',
     'ngSanitize',
     'ngTouch',
-    'ngStorage',
-    'ui.router',
-    'ui.load',
-    'ui.jq',
-]).run(function($rootScope,$state,$http,$stateParams,$cookieStore){
+    'ui.router'
+]).run(function($rootScope,$state,$http,$stateParams){
 
 
   	window._alert = function(text,type,title){

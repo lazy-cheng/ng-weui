@@ -59,10 +59,10 @@
 }
 </style>
 
-<body ng-controller="homeCtrl">
+<body ng-controller="appCtrl">
     <div ng-class="['home']">
         <div class="hd">
-            <h1 class="page_title">ngWeUI</h1>
+            <h1 class="page_title">ng-webui</h1>
             <p class="page_desc">为微信WebUi实现AngularJs引用模块化指令化</p>
         </div>
         <div class="weui_grids">
@@ -167,8 +167,12 @@
 
     <script type="text/javascript" src="node_modules/angular/angular.min.js"></script>
     <script type="text/javascript" src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
-    <script type="text/javascript" src="app.js"></script>
-    <script type="text/javascript" src="example.js"></script>
+    <script type="text/javascript" src="node_modules/angular-animate/angular-animate.min.js"></script>
+    <script type="text/javascript" src="node_modules/angular-sanitize/angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="node_modules/angular-touch/angular-touch.min.js"></script>
+    <script type="text/javascript" src="example/app.js"></script>
+    <script type="text/javascript" src="example/config.router.js"></script>
+    <script type="text/javascript" src="example/example.js"></script>
 </body>
 
 </html>

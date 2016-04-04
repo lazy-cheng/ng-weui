@@ -1,8 +1,15 @@
 'use strict';
 
-//dialog
-app.controller('ctrl_dialog', ['$scope', function($scope) {
+//appCtrl
+app.controller('appCtrl', ['$scope', function($scope) {
 
+
+}]);
+
+
+
+//dialogCtrl
+app.controller('dialogCtrl', ['$scope', function($scope) {
 
 
 }]);

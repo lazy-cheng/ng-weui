@@ -14,19 +14,20 @@ app.run(
     .config(
         ['$stateProvider', '$urlRouterProvider',
             function ($stateProvider, $urlRouterProvider) {
-
                 $urlRouterProvider.otherwise('/');
+
                 $stateProvider
                     .state('app', {
+                        abstract: true,
                         url: '/app',
-                        template: '<div ui-view></div>'
+                        templateUrl: 'example/tpl/app.html'
                     })
 
                     //dialog
                     .state('app.dialog', {
                         url: '/dialog',
-                        templateUrl: 'tpl/dialog.html',
-                        controller: 'ctrl_dialog'
+                        templateUrl: 'example/tpl/dialog.html',
+                        controller: 'dialogCtrl'
                     })
 
             }

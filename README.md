@@ -21,4 +21,4 @@ npm install --save ng-weui
 
 # 已完成
 
-dialog 40%
+ *dialog

@@ -71,7 +71,9 @@
                                 scope.dialogAlert = false;
                             };
                             angular.extend(scope,opts);
-                            $body.find(".weui_dialog_alert").remove();
+                            if (document.querySelector(".weui_dialog_alert")){
+                                document.querySelector(".weui_dialog_alert").remove();
+                            };
                             $body.append($compile(
                                 "<div class='weui_dialog_alert'  ng-show='dialogAlert'>" +
                                 "<div class='weui_mask'></div>" +
@@ -120,9 +122,10 @@
                                 }
                                 scope.dialogConfirm = false;
                             };
-
                             angular.extend(scope,opts);
-                            $body.find(".weui_dialog_confirm").remove();
+                            if (document.querySelector(".weui_dialog_confirm")){
+                                document.querySelector(".weui_dialog_confirm").remove();
+                            };
                             $body.append($compile(
                                 "<div class='weui_dialog_confirm'  ng-show='dialogConfirm'>" +
                                 "<div class='weui_mask'></div>" +

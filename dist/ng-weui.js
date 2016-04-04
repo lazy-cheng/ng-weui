@@ -1,8 +1,8 @@
-/*
- * ng-weui version 0.0.1
- * https://github.com/lazy-cheng/ng-weui.git
+/*!
+ * ng-weui v0.1.0 (https://github.com/lazy-cheng/ng-weui)
+ * Copyright 2016 Tencent, Inc.
+ * Licensed under the MIT license
  */
-
 (function (root, factory) {
     if (typeof module !== 'undefined' && module.exports) {
         // CommonJS

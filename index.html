@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="weuiapp">
+<html lang="en" data-ng-app="app">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
     <title>WeUI</title>
-    <link rel="stylesheet" href="./css/weui.css" />
+    <!-- weui  0.4.0 -->
+    <link rel="stylesheet" href="node_modules/weui/dist/style/weui.min.css" />
+
 </head>
 <style type="text/css">
 .home,
@@ -60,8 +62,8 @@
 <body ng-controller="homeCtrl">
     <div ng-class="['home']">
         <div class="hd">
-            <h1 class="page_title">WeUI</h1>
-            <p class="page_desc">为微信Web服务量身设计</p>
+            <h1 class="page_title">ngWeUI</h1>
+            <p class="page_desc">为微信WebUi实现AngularJs引用模块化指令化</p>
         </div>
         <div class="weui_grids">
             <a href="#/button" class="weui_grid js_grid" data-id="button" ng-click="showBlock()">

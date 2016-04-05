@@ -1,6 +1,6 @@
 /*!
  * ng-weui v0.1.0 (https://github.com/lazy-cheng/ng-weui)
- * Copyright 2016 Tencent, Inc.
+ * Copyright 2016 lazycheng.com
  * Licensed under the MIT license
  */
 (function (root, factory) {

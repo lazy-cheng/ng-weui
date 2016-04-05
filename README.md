@@ -4,6 +4,10 @@
 
 ng-weui 为微信WebUi v0.4.0  实现AngularJs引用模块化指令化封装
 
+# 在线Demo
+
+http://lazycheng.com:6789/codes/ng-weui
+
 # 使用
 
 方法一：

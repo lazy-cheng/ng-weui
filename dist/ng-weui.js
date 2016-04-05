@@ -41,16 +41,22 @@
                         return params;
                     },
                     destroy:function(e){
-                        if (document.querySelector(e)){
-                            document.querySelector(e).remove();
+                        var as = this.getArguments(e);
+                        for(var i=0;i<as.length;i++){
+                            if (document.querySelector(as[i])){
+                                document.querySelector(as[i]).remove();
+                            };
                         };
                     },
                     ruleSelector:function(selector){
                         function uni(selector) {
-                            return selector.replace(/::/g, ':')
+                            if(selector!=null){
+                                return selector.replace(/::/g, ':')
+                            }
                         };
-
-                        return Array.prototype.filter.call(Array.prototype.concat.apply([], Array.prototype.map.call(document.styleSheets, function(x) {
+                        return Array.prototype.filter.call(
+                            Array.prototype.concat.apply([],
+                            Array.prototype.map.call(document.styleSheets, function(x) {
                             return Array.prototype.slice.call(x.cssRules);
                         })), function(x) {
                             return uni(x.selectorText) === uni(selector);
@@ -187,8 +193,26 @@
                                 scope.toast = false;
                             };
                             angular.extend(scope,opts);
-                            privateMethods.destroy(".aweui-show");
+                            privateMethods.destroy(".aweui-show #aweui-show");
+                            switch (opts.type){
+                                case "error":
+                                    // \EA0D
+                                    opts.type = "\\EA0D";
+                                    break;
+                                case "info":
+                                    // \EA0C
+                                    opts.type = "\\EA0C";
+                                    break;
+                                default:
+                                    opts.type = "\\EA08";
+                                    break;
+                            };
                             $body.append($compile(
+                                "<style id='aweui-show' type='text/css'>" +
+                                ".weui_icon_toast:before {" +
+                                "  content: '" + opts.type +
+                                "' }" +
+                                "</style>" +
                                 "<div class='aweui-show'  ng-show='toast'>" +
                                 "<div class='weui_mask_transparent'></div>" +
                                 " <div class='weui_toast'>" +
@@ -197,30 +221,68 @@
                                 "</div>" +
                                 "</div>"
                             )(scope));
-
-                            var pseudo = privateMethods.ruleSelector(".weui_icon_toast:before").slice(-1);
-                            debugger
-                            switch (opts.type){
-                                case "error":
-                                    // \EA0D
-                                    opts.type = "\EA0D";
-                                    break;
-                                case "info":
-                                    // \EA0C
-                                    opts.type = "\EA0C";
-                                    break;
-                                default:
-                                    opts.type = "\EA08";
-                                    break;
-                            }
-                            pseudo.forEach(function(rule) {
-                                debugger
-                                rule.style.content = opts.type;
-                            });
                             scope.show();
                             $timeout(function(){
                                 scope.hide();
                             },scope.time);
+                        },
+                        showLoading:function(opts){
+                            if(angular.isString(opts)){
+                                opts = {loadText:opts};
+                            }else if(angular.isObject(opts)){
+                                opts.loadText = opts.loadText || "数据加载中";
+                            }else{
+                                opts = {loadText:"数据加载中"};
+                            };
+                            var scope = opts.scope = angular.isObject(opts.scope) ? opts.scope.$new() : $rootScope.$new();
+                            scope.show = function(){
+                                scope.toast = true;
+                            };
+                            scope.hide= function(){
+                                scope.toast = false;
+                            };
+
+                            angular.extend(scope,opts);
+                            privateMethods.destroy(".weui_loading_toast");
+                            switch (opts.type){
+                                case "error":
+                                    // \EA0D
+                                    opts.type = "\\EA0D";
+                                    break;
+                                case "info":
+                                    // \EA0C
+                                    opts.type = "\\EA0C";
+                                    break;
+                                default:
+                                    opts.type = "\\EA08";
+                                    break;
+                            };
+                            $body.append($compile(
+                                "<div class='weui_loading_toast aweui-show'>" +
+                                " <div class='weui_mask_transparent'></div>" +
+                                "  <div class='weui_toast'>" +
+                                "<div class='weui_loading'>" +
+                                " <div class='weui_loading_leaf weui_loading_leaf_0'></div>" +
+                                " <div class='weui_loading_leaf weui_loading_leaf_1'></div>" +
+                                " <div class='weui_loading_leaf weui_loading_leaf_2'></div>" +
+                                " <div class='weui_loading_leaf weui_loading_leaf_3'></div>" +
+                                " <div class='weui_loading_leaf weui_loading_leaf_4'></div>" +
+                                " <div class='weui_loading_leaf weui_loading_leaf_5'></div>" +
+                                " <div class='weui_loading_leaf weui_loading_leaf_6'></div>" +
+                                " <div class='weui_loading_leaf weui_loading_leaf_7'></div>" +
+                                " <div class='weui_loading_leaf weui_loading_leaf_8'></div>" +
+                                " <div class='weui_loading_leaf weui_loading_leaf_9'></div>" +
+                                " <div class='weui_loading_leaf weui_loading_leaf_10'></div>" +
+                                " <div class='weui_loading_leaf weui_loading_leaf_11'></div>" +
+                                "</div>" +
+                                " <p class='weui_toast_content'>{{loadText}}</p>" +
+                                "</div>" +
+                                "</div>"
+                            )(scope));
+                            return scope;
+                        },
+                        hideLoading:function(){
+                            privateMethods.destroy(".weui_loading_toast");
                         }
                     }
                 };

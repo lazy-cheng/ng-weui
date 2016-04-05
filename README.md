@@ -1,8 +1,8 @@
-# ng-weui（开发中）
+# ng-weui
 
 # 概述
 
-ng-weui 为微信WebUi v0.4.0 实现AngularJs引用模块化指令化封装
+ng-weui 为微信WebUi v0.4.0  实现AngularJs引用模块化指令化封装
 
 # 使用
 
@@ -22,3 +22,4 @@ npm install --save ng-weui
 # 已完成
 
  *dialog
+ *toast

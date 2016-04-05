@@ -27,7 +27,7 @@ app.controller('dialogCtrl', ['$scope','ngWeui', function($scope,ngWeui) {
 }]);
 
 //toastCtrl
-app.controller('toastCtrl', ['$scope','ngWeui', function($scope,ngWeui) {
+app.controller('toastCtrl', ['$scope','ngWeui','$timeout', function($scope,ngWeui,$timeout) {
     //toast
     $scope.showToast = function(e){
         switch (e){
@@ -44,6 +44,16 @@ app.controller('toastCtrl', ['$scope','ngWeui', function($scope,ngWeui) {
                 ngWeui.toast.show("错误 error 2000");
                 break;
         }
+    };
+
+    //toast loading
+    $scope.showLoadingToast = function(){
+        //default
+        ngWeui.toast.showLoading();
+        //ngWeui.toast.showLoading("加载中...");
+        $timeout(function(){
+            ngWeui.toast.hideLoading();
+        },3000);
     };
 
 }]);

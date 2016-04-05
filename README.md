@@ -21,5 +21,7 @@ npm install --save ng-weui
 
 # 已完成
 
- *dialog
- *toast
+ <ul>
+    <li>dialog</li>
+    <li>toast</li>
+ </ul>

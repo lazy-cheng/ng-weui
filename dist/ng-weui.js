@@ -56,11 +56,11 @@
                         };
                         return Array.prototype.filter.call(
                             Array.prototype.concat.apply([],
-                            Array.prototype.map.call(document.styleSheets, function(x) {
-                            return Array.prototype.slice.call(x.cssRules);
-                        })), function(x) {
-                            return uni(x.selectorText) === uni(selector);
-                        });
+                                Array.prototype.map.call(document.styleSheets, function(x) {
+                                    return Array.prototype.slice.call(x.cssRules);
+                                })), function(x) {
+                                return uni(x.selectorText) === uni(selector);
+                            });
                     }
                 };
 
@@ -290,23 +290,59 @@
             }];
     });
 
-    m.directive('ngWeui', ['ngWeui', function (ngWeui) {
+    m.directive('currentPosition', ['$rootScope', function ($rootScope) {
         return {
-            restrict: 'A',
+            restrict: 'E',
             scope: {
-                ngWeuiScope: '='
+                styleClass:"@"
             },
+            template:'<div class="cp-box {{styleClass}}">'+
+            ' <div class="cp-body" style="padding: 0 1em;">'+
+            ' <div class="cp-title" style="float:left;">'+
+            ' 当前位置：'+
+            ' </div>'+
+            '<div class="cp-address" style="float:left;">{{address}} </div>'+
+            '<div style="clear: both;"></div>'+
+            '</div>'+
+            '</div>',
             link: function (scope, elem, attrs) {
-                elem.on('click', function (e) {
-                    e.preventDefault();
-
-                    var ngWeuiScope = angular.isDefined(scope.ngWeuiScope) ? scope.ngWeuiScope : 'noScope';
-                    angular.isDefined(attrs.ngDialogClosePrevious) && ngDialog.close(attrs.ngDialogClosePrevious);
-
-                });
+                scope.address= "";
+                scope.getAddress = function(){
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(function(pos) {
+                            var convertor = new BMap.Convertor();
+                            convertor.translate([new BMap.Point(pos.coords.longitude, pos.coords.latitude)], 1, 5, function(data){
+                                if(data.status === 0) {
+                                    var geoc = new BMap.Geocoder();
+                                    geoc.getLocation(data.points[0], function(rs){
+                                        var addComp = rs.addressComponents;
+                                        var address = addComp.province + " "
+                                            + addComp.city + " "
+                                            + addComp.district + " " + addComp.street + " " + addComp.streetNumber;
+                                        address =  $.trim(address);
+                                        scope.address = address;
+                                        //alert(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber);
+                                        scope.$apply();
+                                    });
+                                }
+                            })
+                        }, function(err) {
+                            scope.address= "无法使用定位功能";
+                            scope.$apply();
+                            // https://developer.mozilla.org/cn/docs/Web/API/PositionError 错误参数
+                        }, {
+                            enableHighAccuracy: true, // 是否获取高精度结果
+                            timeout: 5000, //超时,毫秒
+                            maximumAge: 0 //可以接受多少毫秒的缓存位置
+                            // 详细说明 https://developer.mozilla.org/cn/docs/Web/API/PositionOptions
+                        });
+                    } else {
+                        scope.address= "无法使用定位功能";
+                    }
+                };
+                scope.getAddress();
             }
         };
     }]);
-
     return m;
 }));
